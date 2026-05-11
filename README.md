@@ -14,6 +14,26 @@ RelayPanel is a Web panel for managing landing protocols and relay forwarding ru
 - Automatic backup before config overwrite
 - Vue 3 + Vite dashboard and management forms
 
+## One-click Install
+
+Run this on Debian / Ubuntu as root:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/kuobou/Kuobox_v2/main/install.sh)
+```
+
+Custom install options:
+
+```bash
+PANEL_PORT=3000 DEFAULT_ADMIN=admin DEFAULT_PASSWORD='change-me' bash <(curl -fsSL https://raw.githubusercontent.com/kuobou/Kuobox_v2/main/install.sh)
+```
+
+After installation, open:
+
+```text
+http://your-server-ip:3000
+```
+
 ## Development
 
 ```bash
