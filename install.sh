@@ -54,6 +54,12 @@ systemctl daemon-reload
 systemctl enable relay-panel
 systemctl restart relay-panel
 
-echo "RelayPanel installed: http://$(hostname -I | awk '{print $1}'):${PANEL_PORT}"
+PUBLIC_IP="$(curl -4 -fsSL --max-time 5 https://api.ipify.org 2>/dev/null || curl -4 -fsSL --max-time 5 https://ifconfig.me 2>/dev/null || true)"
+LOCAL_IP="$(hostname -I | awk '{print $1}')"
+
+if [[ -n "${PUBLIC_IP}" ]]; then
+  echo "RelayPanel public URL: http://${PUBLIC_IP}:${PANEL_PORT}"
+fi
+echo "RelayPanel local URL: http://${LOCAL_IP}:${PANEL_PORT}"
 echo "Username: ${DEFAULT_ADMIN}"
 echo "Password: ${DEFAULT_PASSWORD}"
