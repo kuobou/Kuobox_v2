@@ -1,0 +1,40 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "vless-reality-{{port}}",
+      "listen": "0.0.0.0",
+      "port": {{port}},
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "{{uuid}}",
+            "flow": "{{flow}}"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "{{dest}}",
+          "xver": 0,
+          "serverNames": ["{{server_name}}"],
+          "privateKey": "{{reality_private_key}}",
+          "shortIds": ["{{short_id}}"]
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+services:
+  - name: "relay-{{listen_port}}"
+    addr: ":{{listen_port}}"
+    handler:
+      type: "{{protocol}}"
+    listener:
+      type: "{{protocol}}"
+    forwarder:
+      nodes:
+        - name: "landing"
+          addr: "{{remote_host}}:{{remote_port}}"

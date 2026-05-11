@@ -1,0 +1,16 @@
+[Unit]
+Description=RelayPanel Web Management Panel
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/relay-panel
+EnvironmentFile=/opt/relay-panel/backend/.env
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,24 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "shadowsocks-{{port}}",
+      "listen": "0.0.0.0",
+      "port": {{port}},
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "{{method}}",
+        "password": "{{password}}",
+        "network": "tcp,udp"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ]
+}

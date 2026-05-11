@@ -1,0 +1,11 @@
+[Unit]
+Description=Realm Relay Service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/realm -c /etc/realm/config.toml
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

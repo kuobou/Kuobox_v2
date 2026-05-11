@@ -1,0 +1,16 @@
+{
+  "name": "relay-panel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "RelayPanel landing and relay management panel",
+  "scripts": {
+    "dev": "npm run dev --workspace backend",
+    "start": "npm run start --workspace backend",
+    "frontend:dev": "npm run dev --workspace frontend",
+    "backend:dev": "npm run dev --workspace backend"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "trojan-{{port}}",
+      "listen": "0.0.0.0",
+      "port": {{port}},
+      "protocol": "trojan",
+      "settings": {
+        "clients": [
+          {
+            "password": "{{password}}"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "{{server_name}}",
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/cert.pem",
+              "keyFile": "/etc/ssl/key.pem"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ]
+}

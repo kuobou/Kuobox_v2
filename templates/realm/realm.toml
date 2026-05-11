@@ -1,0 +1,4 @@
+[[endpoints]]
+listen = "0.0.0.0:{{listen_port}}"
+remote = "{{remote_host}}:{{remote_port}}"
+network = "{{protocol}}"
