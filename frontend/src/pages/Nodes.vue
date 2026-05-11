@@ -1,5 +1,10 @@
 <template>
   <div class="space-y-5">
+    <div>
+      <h1 class="page-title">節點管理</h1>
+      <p class="page-subtitle">建立 Landing、Relay 或 Hybrid 節點，作為協議與轉發規則的管理對象。</p>
+    </div>
+
     <form class="panel grid grid-cols-1 gap-3 p-4 md:grid-cols-5" @submit.prevent="save">
       <Input v-model="form.name" label="名稱" />
       <Select v-model="form.mode" label="模式" :options="modes" />
@@ -12,11 +17,11 @@
 
     <div class="panel overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-left text-xs text-slate-500">
+        <thead class="bg-neutral-50 text-left text-xs text-neutral-500">
           <tr><th class="p-3">Name</th><th>Mode</th><th>IP</th><th>Location</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <tr v-for="node in nodes" :key="node.id" class="border-t border-slate-100">
+          <tr v-for="node in nodes" :key="node.id" class="border-t border-black/5">
             <td class="p-3 font-medium">{{ node.name }}</td>
             <td>{{ node.mode }}</td>
             <td>{{ node.ip }}</td>

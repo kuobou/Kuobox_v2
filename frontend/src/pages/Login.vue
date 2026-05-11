@@ -1,9 +1,10 @@
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-slate-100 p-4">
-    <form class="panel w-full max-w-sm p-6" @submit.prevent="submit">
-      <div class="mb-6">
-        <h1 class="text-xl font-semibold">RelayPanel</h1>
-        <p class="mt-1 text-sm text-slate-500">登入管理面板</p>
+  <div class="flex min-h-screen items-center justify-center bg-[#f5f5f7] p-4">
+    <form class="panel w-full max-w-sm p-7" @submit.prevent="submit">
+      <div class="mb-7 text-center">
+        <div class="mx-auto mb-4 grid h-11 w-11 place-items-center rounded-md bg-neutral-950 text-lg font-semibold text-white">R</div>
+        <h1 class="text-2xl font-semibold tracking-normal text-neutral-950">RelayPanel</h1>
+        <p class="mt-2 text-sm text-neutral-500">登入後管理落地協議與中轉規則</p>
       </div>
       <div class="space-y-3">
         <Input v-model="username" label="Username" autocomplete="username" />

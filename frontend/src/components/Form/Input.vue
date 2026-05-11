@@ -1,6 +1,6 @@
 <template>
   <label class="block">
-    <span class="mb-1 block text-xs font-medium text-slate-500">{{ label }}</span>
+    <span class="mb-1 block text-xs font-medium text-neutral-500">{{ label }}</span>
     <input class="input" :value="modelValue" v-bind="$attrs" @input="$emit('update:modelValue', $event.target.value)" />
   </label>
 </template>

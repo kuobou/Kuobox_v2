@@ -1,5 +1,10 @@
 <template>
   <div class="space-y-5">
+    <div>
+      <h1 class="page-title">協議管理</h1>
+      <p class="page-subtitle">透過模板產生 Xray 落地協議設定，資料寫入 SQLite，設定輸出到 storage/configs。</p>
+    </div>
+
     <form class="panel grid grid-cols-1 gap-3 p-4 md:grid-cols-4" @submit.prevent="save">
       <Select v-model="type" label="協議" :options="protocols" />
       <Input v-model="form.port" label="Port" type="number" />
@@ -19,11 +24,11 @@
 
     <div class="panel overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-left text-xs text-slate-500">
+        <thead class="bg-neutral-50 text-left text-xs text-neutral-500">
           <tr><th class="p-3">Protocol</th><th>Port</th><th>UUID</th><th>Config</th></tr>
         </thead>
         <tbody>
-          <tr v-for="item in items" :key="item.id" class="border-t border-slate-100">
+          <tr v-for="item in items" :key="item.id" class="border-t border-black/5">
             <td class="p-3">{{ item.protocol }}</td>
             <td>{{ item.port }}</td>
             <td class="font-mono text-xs">{{ item.uuid }}</td>
@@ -33,7 +38,7 @@
       </table>
     </div>
 
-    <pre v-if="lastConfig" class="panel overflow-auto p-4 text-xs">{{ lastConfig }}</pre>
+    <pre v-if="lastConfig" class="panel overflow-auto p-4 text-xs leading-6">{{ lastConfig }}</pre>
   </div>
 </template>
 

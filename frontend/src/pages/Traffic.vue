@@ -1,7 +1,13 @@
 <template>
-  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-    <StatusCard label="Upload" :value="bytes(status?.traffic?.upload)" />
-    <StatusCard label="Download" :value="bytes(status?.traffic?.download)" />
+  <div class="space-y-5">
+    <div>
+      <h1 class="page-title">流量統計</h1>
+      <p class="page-subtitle">從系統網卡資料讀取目前累計上傳與下載流量。</p>
+    </div>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <StatusCard label="Upload" :value="bytes(status?.traffic?.upload)" />
+      <StatusCard label="Download" :value="bytes(status?.traffic?.download)" />
+    </div>
   </div>
 </template>
 

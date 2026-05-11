@@ -1,5 +1,10 @@
 <template>
   <div class="space-y-5">
+    <div>
+      <h1 class="page-title">中轉規則</h1>
+      <p class="page-subtitle">建立 Realm 或 Gost TCP/UDP Forward 規則，集中管理中轉機純轉發。</p>
+    </div>
+
     <form class="panel grid grid-cols-1 gap-3 p-4 md:grid-cols-5" @submit.prevent="save">
       <Select v-model="type" label="引擎" :options="types" />
       <Select v-model="form.protocol" label="Protocol" :options="protocols" />
@@ -17,11 +22,11 @@
 
     <div class="panel overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-left text-xs text-slate-500">
+        <thead class="bg-neutral-50 text-left text-xs text-neutral-500">
           <tr><th class="p-3">Type</th><th>Listen</th><th>Remote</th><th>Config</th></tr>
         </thead>
         <tbody>
-          <tr v-for="item in items" :key="item.id" class="border-t border-slate-100">
+          <tr v-for="item in items" :key="item.id" class="border-t border-black/5">
             <td class="p-3">{{ item.relay_type }}</td>
             <td>{{ item.protocol }}://:{{ item.listen_port }}</td>
             <td>{{ item.remote_host }}:{{ item.remote_port }}</td>
@@ -31,7 +36,7 @@
       </table>
     </div>
 
-    <pre v-if="lastConfig" class="panel overflow-auto p-4 text-xs">{{ lastConfig }}</pre>
+    <pre v-if="lastConfig" class="panel overflow-auto p-4 text-xs leading-6">{{ lastConfig }}</pre>
   </div>
 </template>
 

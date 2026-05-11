@@ -1,9 +1,9 @@
 <template>
   <div class="min-h-screen">
     <Sidebar />
-    <div class="pl-64">
+    <div class="md:pl-64">
       <Header />
-      <main class="p-6">
+      <main class="mx-auto max-w-7xl p-4 md:p-8">
         <router-view />
       </main>
     </div>
