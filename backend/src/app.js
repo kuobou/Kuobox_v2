@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 
@@ -28,6 +30,15 @@ app.use('/api/protocols', authRequired, protocolRoutes);
 app.use('/api/relays', authRequired, relayRoutes);
 app.use('/api/service', authRequired, serviceRoutes);
 app.use('/api/backup', authRequired, backupRoutes);
+
+const frontendDist = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/')) return next();
+    res.sendFile(path.join(frontendDist, 'index.html'));
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);

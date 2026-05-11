@@ -4,6 +4,7 @@
   "private": true,
   "description": "RelayPanel landing and relay management panel",
   "scripts": {
+    "build": "npm run build --workspace frontend",
     "dev": "npm run dev --workspace backend",
     "start": "npm run start --workspace backend",
     "frontend:dev": "npm run dev --workspace frontend",

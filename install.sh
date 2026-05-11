@@ -41,7 +41,9 @@ mkdir -p "${INSTALL_DIR}"
 cp -a "${SOURCE_DIR}/." "${INSTALL_DIR}/"
 cd "${INSTALL_DIR}"
 
-npm install --omit=dev
+npm install
+npm run build
+npm prune --omit=dev
 
 cp backend/.env.example backend/.env
 sed -i "s/^PANEL_PORT=.*/PANEL_PORT=${PANEL_PORT}/" backend/.env
