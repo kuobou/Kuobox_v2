@@ -10,4 +10,15 @@ client.interceptors.request.use((config) => {
   return config;
 });
 
+client.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && window.location.pathname !== '/login') {
+      localStorage.removeItem('relay_token');
+      window.location.assign('/login');
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default client;
