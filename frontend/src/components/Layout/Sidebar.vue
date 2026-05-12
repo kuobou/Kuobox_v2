@@ -19,10 +19,10 @@
 
 <script setup>
 const items = [
-  { to: '/', label: 'Dashboard' },
+  { to: '/', label: '總覽' },
+  { to: '/relays', label: '中轉設定' },
+  { to: '/protocols', label: '協議管理（進階）' },
   { to: '/nodes', label: '節點管理' },
-  { to: '/protocols', label: '協議管理' },
-  { to: '/relays', label: '中轉規則' },
   { to: '/traffic', label: '流量統計' },
   { to: '/logs', label: '日誌' },
   { to: '/settings', label: '設定' }

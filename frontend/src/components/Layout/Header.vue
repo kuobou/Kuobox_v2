@@ -22,10 +22,10 @@ import { useAuthStore } from '../../stores/auth';
 const router = useRouter();
 const auth = useAuthStore();
 const items = [
-  { to: '/', label: 'Dashboard' },
+  { to: '/', label: '總覽' },
+  { to: '/relays', label: '中轉設定' },
+  { to: '/protocols', label: '協議（進階）' },
   { to: '/nodes', label: '節點' },
-  { to: '/protocols', label: '協議' },
-  { to: '/relays', label: '中轉' },
   { to: '/traffic', label: '流量' },
   { to: '/logs', label: '日誌' },
   { to: '/settings', label: '設定' }
