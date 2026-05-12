@@ -1,6 +1,7 @@
 const inboundModel = require('../models/inbound.model');
 const generator = require('../services/configGenerator.service');
 const xray = require('../services/xray.service');
+const { buildShareLink } = require('../services/shareLink.service');
 const serviceController = require('./service.controller');
 const { assertPort, isPortAvailable } = require('../utils/port');
 const { uuid } = require('../utils/uuid');
@@ -30,17 +31,19 @@ async function createProtocol(protocol, req, res, next) {
     };
 
     const generated = generator.generateInbound(protocol, vars);
+    const share_link = buildShareLink(protocol, vars);
     const inbound = inboundModel.create({
       ...vars,
       node_id: req.body.node_id,
-      config_path: generated.outputPath
+      config_path: generated.outputPath,
+      share_link
     });
 
     if (req.body.apply === true) {
       xray.syncConfig(generated.outputPath);
       await serviceController.runServiceAction('restart', 'xray');
     }
-    res.status(201).json({ inbound, config: generated.content });
+    res.status(201).json({ inbound: { ...inbound, share_link }, config: generated.content, share_link });
   } catch (error) {
     next(error);
   }

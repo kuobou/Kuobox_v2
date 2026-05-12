@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS inbounds (
   fingerprint TEXT,
   dest TEXT,
   config_path TEXT,
+  share_link TEXT,
   enabled INTEGER NOT NULL DEFAULT 1,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (node_id) REFERENCES nodes(id) ON DELETE SET NULL

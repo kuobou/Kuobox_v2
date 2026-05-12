@@ -27,6 +27,7 @@ function initDatabase() {
   const database = getDb();
   const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
   database.exec(schema);
+  ensureColumn(database, 'inbounds', 'share_link', 'TEXT');
 
   const count = database.prepare('SELECT COUNT(*) AS count FROM users').get().count;
   if (count === 0) {
@@ -34,6 +35,13 @@ function initDatabase() {
     const password = process.env.DEFAULT_PASSWORD || 'changeme123';
     const hash = bcrypt.hashSync(password, 10);
     database.prepare('INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)').run(username, hash, 'admin');
+  }
+}
+
+function ensureColumn(database, table, column, type) {
+  const columns = database.prepare(`PRAGMA table_info(${table})`).all().map((item) => item.name);
+  if (!columns.includes(column)) {
+    database.prepare(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`).run();
   }
 }
 

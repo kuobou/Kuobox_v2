@@ -12,8 +12,8 @@ function create(data) {
   const info = getDb().prepare(`
     INSERT INTO inbounds (
       node_id, protocol, port, uuid, flow, reality_private_key, reality_public_key,
-      short_id, server_name, fingerprint, dest, config_path, enabled
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      short_id, server_name, fingerprint, dest, config_path, share_link, enabled
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     data.node_id || null,
     data.protocol,
@@ -27,6 +27,7 @@ function create(data) {
     data.fingerprint || null,
     data.dest || null,
     data.config_path || null,
+    data.share_link || null,
     data.enabled === false ? 0 : 1
   );
   return find(info.lastInsertRowid);
@@ -39,7 +40,7 @@ function update(id, data) {
   getDb().prepare(`
     UPDATE inbounds SET node_id = ?, protocol = ?, port = ?, uuid = ?, flow = ?,
       reality_private_key = ?, reality_public_key = ?, short_id = ?, server_name = ?,
-      fingerprint = ?, dest = ?, config_path = ?, enabled = ? WHERE id = ?
+      fingerprint = ?, dest = ?, config_path = ?, share_link = ?, enabled = ? WHERE id = ?
   `).run(
     next.node_id || null,
     next.protocol,
@@ -53,6 +54,7 @@ function update(id, data) {
     next.fingerprint || null,
     next.dest || null,
     next.config_path || null,
+    next.share_link || null,
     next.enabled ? 1 : 0,
     id
   );

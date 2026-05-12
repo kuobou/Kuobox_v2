@@ -14,7 +14,7 @@ DEFAULT_ADMIN="${DEFAULT_ADMIN:-admin}"
 DEFAULT_PASSWORD="${DEFAULT_PASSWORD:-changeme123}"
 
 apt-get update -y
-apt-get install -y curl ca-certificates build-essential python3 unzip openssl
+apt-get install -y curl ca-certificates unzip openssl
 
 if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
   curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -41,9 +41,18 @@ mkdir -p "${INSTALL_DIR}"
 cp -a "${SOURCE_DIR}/." "${INSTALL_DIR}/"
 cd "${INSTALL_DIR}"
 
+cd frontend
 npm install
 npm run build
-npm prune --omit=dev
+rm -rf node_modules package-lock.json
+
+cd ../backend
+npm install --omit=dev || {
+  apt-get install -y build-essential python3
+  npm install --omit=dev
+}
+
+cd "${INSTALL_DIR}"
 
 cp backend/.env.example backend/.env
 sed -i "s/^PANEL_PORT=.*/PANEL_PORT=${PANEL_PORT}/" backend/.env
