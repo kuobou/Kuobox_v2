@@ -12,6 +12,8 @@ TMP_DIR="/tmp/relay-panel-install"
 PANEL_PORT="${PANEL_PORT:-3000}"
 DEFAULT_ADMIN="${DEFAULT_ADMIN:-admin}"
 DEFAULT_PASSWORD="${DEFAULT_PASSWORD:-changeme123}"
+# 預設安裝的代理核心。可用環境變數覆蓋，例如：INSTALL_CORES="realm xray"
+INSTALL_CORES="${INSTALL_CORES:-realm xray gost singbox}"
 
 apt-get update -y
 apt-get install -y curl ca-certificates build-essential python3 openssl unzip
@@ -62,6 +64,21 @@ cp scripts/systemd/relay-panel.service /etc/systemd/system/relay-panel.service
 systemctl daemon-reload
 systemctl enable relay-panel
 systemctl restart relay-panel
+
+# 安裝代理核心（realm / xray / gost / sing-box）
+# 失敗不中斷整個安裝，僅輸出警告——使用者可之後手動補裝
+for core in ${INSTALL_CORES}; do
+  script="${INSTALL_DIR}/scripts/install-core/install-${core}.sh"
+  if [[ ! -f "${script}" ]]; then
+    echo "WARN: unknown core '${core}', skipped"
+    continue
+  fi
+  echo ">>> Installing core: ${core}"
+  if ! bash "${script}"; then
+    echo "WARN: failed to install ${core} — 你之後可手動執行 ${script}"
+  fi
+done
+systemctl daemon-reload || true
 
 PUBLIC_IP="$(curl -4 -fsSL --max-time 5 https://api.ipify.org 2>/dev/null || curl -4 -fsSL --max-time 5 https://ifconfig.me 2>/dev/null || true)"
 LOCAL_IP="$(hostname -I | awk '{print $1}')"
