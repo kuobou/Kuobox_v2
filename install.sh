@@ -7,20 +7,39 @@ if [[ ${EUID} -ne 0 ]]; then
 fi
 
 INSTALL_DIR="/opt/relay-panel"
+REPO_ZIP_URL="${REPO_ZIP_URL:-https://github.com/kuobou/Kuobox_v2/archive/refs/heads/main.zip}"
+TMP_DIR="/tmp/relay-panel-install"
 PANEL_PORT="${PANEL_PORT:-3000}"
 DEFAULT_ADMIN="${DEFAULT_ADMIN:-admin}"
 DEFAULT_PASSWORD="${DEFAULT_PASSWORD:-changeme123}"
 
 apt-get update -y
-apt-get install -y curl ca-certificates build-essential python3 openssl
+apt-get install -y curl ca-certificates build-essential python3 openssl unzip
 
 if ! command -v node >/dev/null 2>&1; then
   curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
   apt-get install -y nodejs
 fi
 
+# 若當前目錄不是專案根目錄，就從 GitHub 下載 zip
+if [[ -f "./package.json" && -d "./backend" && -d "./frontend" ]]; then
+  SOURCE_DIR="$(pwd)"
+else
+  rm -rf "${TMP_DIR}"
+  mkdir -p "${TMP_DIR}"
+  echo "Downloading source from ${REPO_ZIP_URL}"
+  curl -fsSL "${REPO_ZIP_URL}" -o "${TMP_DIR}/relay-panel.zip"
+  unzip -q "${TMP_DIR}/relay-panel.zip" -d "${TMP_DIR}"
+  SOURCE_DIR="$(find "${TMP_DIR}" -maxdepth 1 -type d -name 'Kuobox_v2-*' | head -n 1)"
+fi
+
+if [[ -z "${SOURCE_DIR:-}" || ! -f "${SOURCE_DIR}/package.json" ]]; then
+  echo "Install source is invalid: package.json not found"
+  exit 1
+fi
+
 mkdir -p "${INSTALL_DIR}"
-cp -a . "${INSTALL_DIR}/"
+cp -a "${SOURCE_DIR}/." "${INSTALL_DIR}/"
 cd "${INSTALL_DIR}"
 
 # 安裝所有 workspace 依賴（含 frontend 的 vite，用於下一步 build）
